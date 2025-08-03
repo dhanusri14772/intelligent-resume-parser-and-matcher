@@ -33,7 +33,7 @@ if __name__ =="__main__" :
    file_path = filedialog.askopenfilename(title="select image or scanned pdf")
    if file_path.endswith((".png",".jpg",".jpeg")):
       text = ocr_from_image(file_path)
-   elif file_path.endswith(file_path):
+   elif file_path.endswith(".pdf"):
       text = ocr_from_pdf(file_path)
    else:
       print ("unsuppoerted file type")
@@ -44,4 +44,5 @@ if __name__ =="__main__" :
 
                        
     
+
                       
