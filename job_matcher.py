@@ -49,14 +49,14 @@ def find_job_match(resume_keywords, job_data, top_n=3):
     resume_vector = tfidf_matrix[-1]
     job_vectors = tfidf_matrix[:-1]
     similarity_score = cosine_similarity(resume_vector,job_vectors)[0]
-    job_scores =[(job_data[i][0], job_data[i][1], similarity_score[i]) for i in range(len(job_data))]
+    job_scores =[(job_data[i][0], job_data[i][1], similarity_score[i] * 100) for i in range(len(job_data))]
     ranked_jobs = sorted(job_scores, key=lambda x: x[2], reverse=True)
     return ranked_jobs[:top_n]
 
 def display_job_matches(matches):
     print("\nBest Matching Job Roles:\n")
     for job_id, title, score in matches:
-        print(f"{title} (Match Score: {score:.2f})")
+        print(f"{title} (Match Score: {score:.2f}%)")
 if __name__ == "__main__":
     print("\nMatching your resume to the best fitting job roles\n")
     extracted_skills = extract_skills_from_resume()
@@ -82,4 +82,5 @@ if __name__ == "__main__":
             except ValueError:
                 print("please enter a valid numeric Job ID.")
         else:
+
             print("no jobs available in the system.")
