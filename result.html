@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parsed Resume & Job Match</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; }
+        h2 { color: #333; }
+        .section { margin-bottom: 20px; padding: 15px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        p { margin: 5px 0; }
+        .fallback { color: #888; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h2>Parsed Resume Information</h2>
+    <div class="section">
+        <p><strong>Name:</strong> {{ parsed.name if parsed.name else "Not Found" }}</p>
+        <p><strong>Email:</strong> {{ parsed.email if parsed.email else "Not Found" }}</p>
+        <p><strong>Phone:</strong> {{ parsed.phone if parsed.phone else "Not Found" }}</p>
+        
+        <p><strong>Skills:</strong><br>
+            {% if parsed.skills %}
+                {{ parsed.skills|join(', ') }}
+            {% else %}
+                <span class="fallback">No skills found</span>
+            {% endif %}
+        </p>
+
+        <p><strong>Education:</strong><br>
+            {% if parsed.education %}
+                {% for edu in parsed.education %}
+                    - {{ edu }}<br>
+                {% endfor %}
+            {% else %}
+                <span class="fallback">No education details found</span>
+            {% endif %}
+        </p>
+
+        <p><strong>Experience:</strong><br>
+            {% if parsed.experience %}
+                {% for exp in parsed.experience %}
+                    - {{ exp }}<br>
+                {% endfor %}
+            {% else %}
+                <span class="fallback">No experience details found</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <h2>Job Match Result</h2>
+    <div class="section">
+        {% if match %}
+            <p><strong>Recommended Job Role:</strong> {{ match[0][1] }}</p>
+            <p><strong>Match Score:</strong> {{ match[0][2] | round(2) }}%</p>
+        {% else %}
+            <p class="fallback">No matching job found</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
